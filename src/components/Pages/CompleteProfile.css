@@ -1,0 +1,23 @@
+.heading1{
+    border-bottom: 1px solid grey;
+    display: flex;
+    justify-content: center;
+}
+.heading2{
+    padding: 5px 10px;
+    border-radius: 10px;
+    max-width: 550px;
+    margin-left: auto;
+    font-style: italic;   
+}
+.profileform{
+ align-items: center;
+}
+.profileform-button{
+    align-items: center;
+}
+
+.photo{
+    width:32px;
+    height:32px;
+}
