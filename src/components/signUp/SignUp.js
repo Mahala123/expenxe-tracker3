@@ -47,13 +47,13 @@ const AuthForm = () => {
     })
       .then((res) => {
         if (res.ok) {
-          // / console.log(res)
+           console.log(res)
           
           alert("Successfully created");
           return res.json();
         } else {
          return res.json().then((data) => {
-            // console.log(data.error.message);
+             console.log(data.error.message);
             alert(data.error.message);
           });
         }
