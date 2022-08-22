@@ -1,0 +1,15 @@
+
+.header{
+    /* border-bottom: 1px solid grey; */
+    display: flex;
+justify-content: center;
+}
+.comProfile {
+    padding: 5px 10px;
+    background-color: rgba(4, 172, 250, 0.2);
+    border-radius: 10px;
+    max-width: auto;
+    margin-left: auto;
+    font-style: italic;
+    
+}
