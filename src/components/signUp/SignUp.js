@@ -1,6 +1,6 @@
 import { useState, useRef,useContext } from "react";
 import "./SignUp.css";
-import { useHistory } from "react-router-dom";
+import { useHistory,NavLink } from "react-router-dom";
 import AuthContext from "../Store/Store";
 
 const AuthForm = () => {
@@ -99,6 +99,7 @@ const AuthForm = () => {
             {isLogin ? "SignUp" : "Have an account?Login"}
           </button>
         </div>
+        {isLogin && <NavLink to='/password'>forget password?click</NavLink>}
       </form>
     </section>
   );
