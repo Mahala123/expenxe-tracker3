@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import'./WelcomePage.css'
 import{NavLink} from 'react-router-dom'
 import AuthContext from '../Store/Store'
+import LogOutHandler from './LogOutHandler'
 
 function WelcomePage() {
   const authCtx=useContext(AuthContext)
@@ -28,11 +29,13 @@ function WelcomePage() {
    })
   }
   return (
-    <div className='comProfile'>
-      <h3>WELLCOME TO EXPENXE TRACKER</h3>
-      <div className='comProfile'>YOUR profile is incomplete <NavLink to='/CompleteProfile'>complete Now</NavLink></div>
+  <div className='comProfile'>
+  <h3>WELLCOME TO EXPENXE TRACKER</h3>
+  <LogOutHandler/>
+  <div className='comProfile'>YOUR profile is incomplete <NavLink to='/CompleteProfile'>complete Now</NavLink></div>
     <button onClick={verifyEmail}>VERIFY YOUR EMAIL</button>
     </div>
+  
   )
 }
 
