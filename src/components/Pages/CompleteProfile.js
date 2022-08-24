@@ -49,10 +49,10 @@ function CompleteProfile() {
       return res.json()
       .then((data) => {
        
-        const fname = data.users[0].displayName;
-        const url = data.users[0].photoUrl;
-        console.log(fname)
-        console.log(url)
+        inputfullnameref.current.value = data.users[0].displayName;
+        imageurlref.current.value = data.users[0].photoUrl;
+        console.log(inputfullnameref.current.value)
+        console.log(imageurlref.current.value)
       
         
       });
