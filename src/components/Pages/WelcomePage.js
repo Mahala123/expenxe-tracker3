@@ -3,6 +3,7 @@ import'./WelcomePage.css'
 import{NavLink} from 'react-router-dom'
 import AuthContext from '../Store/Store'
 import LogOutHandler from './LogOutHandler'
+import ExpenseForm from './ExpenseForm'
 
 function WelcomePage() {
   const authCtx=useContext(AuthContext)
@@ -34,6 +35,7 @@ function WelcomePage() {
   <LogOutHandler/>
   <div className='comProfile'>YOUR profile is incomplete <NavLink to='/CompleteProfile'>complete Now</NavLink></div>
     <button onClick={verifyEmail}>VERIFY YOUR EMAIL</button>
+    <ExpenseForm/>
     </div>
   
   )
