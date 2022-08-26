@@ -1,33 +1,31 @@
-import React,{useState} from "react"
-const AuthContext=React.createContext({
-    token:"",
-    isLogIn:false,
-    logIn:(token)=>{},
-    logOut:()=>{}
-    
+import { configureStore, createSlice } from "@reduxjs/toolkit"
+const authslice=createSlice({
+
+
+  name:'auth',
+  initialState: {logeIn:true,idToken:null},
+  reducers:{
+
+      logedIn(state){
+
+          state.logeIn=!state.logeIn;
+      },
+      tokenId(state,action){
+          state.idToken=action.payload;
+      },
+      deletetokenId(state){
+           state.idToken=null;   
+      }
+  }
 })
-export const AuthContextProvider=(props)=>{
-    const[token,setToken]=useState(null)
-    const userIsLogIn=!!token
-    const logInHandler=(token)=>
-    {
-        setToken(token)
-    }
-    const logOutHndler=()=>{
-        setToken(null)
-    }
-    
-    const contextValue={
-        token:token,
-        isLogIn:userIsLogIn,
-        logIn:logInHandler,
-        logout:logOutHndler
-        
-    }
-        return(
-        <AuthContext.Provider value={contextValue}>
-            {props.children}
-        </AuthContext.Provider>
-    )
-}
-export default AuthContext ;
+
+
+
+
+const store=configureStore({
+    reducer:{auth:authslice.reducer,exp:expSlice.reducer}
+})
+export const authsliceactions=authslice.actions;
+export const expnseSliceActions=expSlice.actions;
+
+export default store;
