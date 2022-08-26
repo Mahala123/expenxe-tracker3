@@ -23,20 +23,24 @@ function ForgetPassword() {
     .then(res=>{
         if(res.ok)
         {
+          console.log(res.ok)
             alert('link sent to the entered email');
             history.replace('/');
-           
-            }
-        }
-
-    )
+           return res.json()
+         }
+          }).then(data=>
+            {
+              console.log(data)
+            }).catch(err=>{
+              alert(err.message)
+            })
 
   }
   return (
     <div className='signupBody1'>
     <h2>Entered Your Registered Email</h2>
     <form onClick={enterEmail} >
-    <input type="email" placeholder='Email'ref={inputEmail}  required />
+    <input type="email" placeholder='Email'ref={inputEmail} required />
     <button type='submit' className='signupBtn1' >SEND EMAIL</button>
     </form>  
     </div>

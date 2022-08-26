@@ -1,21 +1,24 @@
-import { useState, useRef,useContext } from "react";
+import {  useRef} from "react";
 import "./SignUp.css";
 import { useHistory,NavLink } from "react-router-dom";
-import AuthContext from "../Store/Store";
+import { useSelector,useDispatch } from "react-redux";
+import { authsliceactions } from "../Store/Store";
 
 const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInpRef = useRef();
   const history=useHistory();
- const authCtx= useContext(AuthContext)
-  // console.log(history)
+//  const authCtx= useContext(AuthContext)
+//   // console.log(history)
   // const confirmInpRef = useRef();
+  const dispatch=useDispatch()
+  const logIn = useSelector(state=>state.auth.logeIn)
 
-  const [isLogin, setIsLogin] = useState(true);
+  // const [isLogin, setIsLogin] = useState(true);
   
 
   const switchModeHandler = () => {
-    setIsLogin((prevState) => !prevState);
+   dispatch(authsliceactions.logedIn())
   };
   const submitHandler = (event) => {
     event.preventDefault();
@@ -27,7 +30,7 @@ const AuthForm = () => {
     //   return;
     // }
     let url;
-    if (isLogin) {
+    if (logIn) {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAIpFpXqTkA-YkLV506rGbmUDu1_nJmw5I";
     } else {
@@ -47,7 +50,7 @@ const AuthForm = () => {
     })
       .then((res) => {
         if (res.ok) {
-           console.log(res)
+          // console.log(res)
           
           alert("Successfully created");
           return res.json();
@@ -60,7 +63,8 @@ const AuthForm = () => {
       })
       .then((data) => {
         console.log(data)
-        authCtx.logIn(data.idToken)
+        // authCtx.logIn(data.idToken)
+        dispatch(authsliceactions.tokenId(data.idToken))
          history.replace('/welcome')
        
       }).catch((err)=>{
@@ -70,7 +74,7 @@ const AuthForm = () => {
 
   return (
     <section className="auth">
-      <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+      <h1>{logIn ? "Login" : "Sign Up"}</h1>
       <form onSubmit={submitHandler}>
         <div className="control">
           <input
@@ -93,13 +97,13 @@ const AuthForm = () => {
             required
           />}  */}
        
-          <button>{isLogin ? "Login" : "Create Account"}</button>
+          <button>{logIn ? "Login" : "Create Account"}</button>
           <br />
           <button type="button" className="toggle" onClick={switchModeHandler}>
-            {isLogin ? "SignUp" : "Have an account?Login"}
+            {logIn ? "SignUp" : "Have an account?Login"}
           </button>
         </div>
-        {isLogin && <NavLink to='/password'>forget password?click</NavLink>}
+        {logIn && <NavLink to='/password'>forget password?click</NavLink>}
       </form>
     </section>
   );

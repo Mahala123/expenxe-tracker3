@@ -1,19 +1,21 @@
-import React, { useContext } from 'react'
+import React  from 'react'
 import'./WelcomePage.css'
 import{NavLink} from 'react-router-dom'
-import AuthContext from '../Store/Store'
+// import AuthContext from '../Store/Store'
 import LogOutHandler from './LogOutHandler'
 import ExpenseForm from './ExpenseForm'
+import {useSelector} from "react-redux"
 
 function WelcomePage() {
-  const authCtx=useContext(AuthContext)
+  // 
+  const token=useSelector(state=>state.auth.idToken)
   const verifyEmail=()=>{
    fetch("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAIpFpXqTkA-YkLV506rGbmUDu1_nJmw5I",
    {
     method: 'POST',
         body:JSON.stringify({
            
-        idToken:authCtx.token,
+        idToken:token,
         requestType:'VERIFY_EMAIL',
           }),
           headers:{
