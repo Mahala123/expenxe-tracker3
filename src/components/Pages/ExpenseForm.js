@@ -1,4 +1,4 @@
-import React, { useRef, useState} from "react";
+import React, { useRef} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { expnseSliceActions } from "../Store/Store";
 //import Movieslist from './ExpenseList'
@@ -9,7 +9,7 @@ function ExpenseForm() {
   // const[expense,setExpense]=useState({})
   //const AuthCtx= useContext(AuthContext)
   // const[value,setValue]=useState([])
-  const [premium,setPremium]=useState(false)
+  // const [premium,setPremium]=useState(false)
   const useDes = useRef();
   const refAmount = useRef();
   const selectInp = useRef();
@@ -144,18 +144,8 @@ fetch( `https://expense-tracker-e3657-default-rtdb.firebaseio.com/expenses/${eve
         <button type="submit" className="signupBtn">
           SUBMIT
         </button>
-        {!premium &&  <button type="submit" className="signupBtn">
-            SUBMIT
-          </button>}
-          {premium && (
-            <button
-              type="submit"
-              className="signupBtn"
-              onClick={premiumHandler}
-            >
-              PREMIUM
-            </button>
-          )}
+       
+        
       </form>
       {/* <button>DOWNLOAD YOUR EXPENSE</button> */}
       <ExpensesJsx />
