@@ -17,6 +17,23 @@ function WelcomePage() {
     return p + Number(expenses[key].cost);
   }, 0);
 }
+const csvDownload=()=>{
+  let csv="cost,           category,         description\n";
+  
+  Object.keys(expenses).forEach((item) => {
+
+  csv +=`cost:${expenses[item].cost}\tcatagory:${expenses[item].catagory}\tdescription:${expenses[item].description}`
+  
+})
+
+const blob=new Blob([csv],{type:'plain/text'}) 
+const a=document.createElement("a")
+a.href=URL.createObjectURL(blob)
+a.download='csv-1.txt'
+document.body.appendChild(a)
+a.click()
+
+}
   const verifyEmail=()=>{
    fetch("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAIpFpXqTkA-YkLV506rGbmUDu1_nJmw5I",
    {
@@ -46,12 +63,15 @@ function WelcomePage() {
   <div className='comProfile'>YOUR profile is incomplete <NavLink to='/CompleteProfile'>complete Now</NavLink></div>
     <button onClick={verifyEmail}>VERIFY YOUR EMAIL</button>
     {totalExpense > 10000 && (
-          
           <button>
             Activate Premium
           </button>
         )}
     <ExpenseForm/>
+    
+   <button onClick={csvDownload}>
+    DOWNLOAD CSV
+   </button>
     </div>
   
   )
