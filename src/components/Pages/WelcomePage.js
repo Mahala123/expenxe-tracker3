@@ -9,6 +9,14 @@ import {useSelector} from "react-redux"
 function WelcomePage() {
   // 
   const token=useSelector(state=>state.auth.idToken)
+  // const isPremiums=useSelector(state=>state.exp.isPremium)
+  const expenses=useSelector(state=>state.exp.expenses)
+ let totalExpense=0
+ if (expenses) {
+  totalExpense = Object.keys(expenses).reduce((p, key) => {
+    return p + Number(expenses[key].cost);
+  }, 0);
+}
   const verifyEmail=()=>{
    fetch("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAIpFpXqTkA-YkLV506rGbmUDu1_nJmw5I",
    {
@@ -37,6 +45,12 @@ function WelcomePage() {
   <LogOutHandler/>
   <div className='comProfile'>YOUR profile is incomplete <NavLink to='/CompleteProfile'>complete Now</NavLink></div>
     <button onClick={verifyEmail}>VERIFY YOUR EMAIL</button>
+    {totalExpense > 10000 && (
+          
+          <button>
+            Activate Premium
+          </button>
+        )}
     <ExpenseForm/>
     </div>
   

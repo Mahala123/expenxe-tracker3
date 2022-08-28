@@ -1,4 +1,4 @@
-import React, { useRef} from "react";
+import React, { useRef, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { expnseSliceActions } from "../Store/Store";
 //import Movieslist from './ExpenseList'
@@ -9,11 +9,15 @@ function ExpenseForm() {
   // const[expense,setExpense]=useState({})
   //const AuthCtx= useContext(AuthContext)
   // const[value,setValue]=useState([])
+  const [premium,setPremium]=useState(false)
   const useDes = useRef();
   const refAmount = useRef();
   const selectInp = useRef();
+  
+  
   const submitHandler = (event) => {
     event.preventDefault();
+    
     const amount = refAmount.current.value;
     const description = useDes.current.value;
     const type = selectInp.current.value;
@@ -58,7 +62,7 @@ function ExpenseForm() {
     selectInp.current.value = expenseData.catagory;
     useDes.current.value = expenseData.description;
     fetch(
-      `https://expense-tracker-e3657-default-rtdb.firebaseio.com/expenses.json`,
+      `https://expense-tracker-e3657-default-rtdb.firebaseio.com/expenses/${event.target.id}.json`,
       {
         method: "DELETE",
       }
@@ -77,9 +81,9 @@ function ExpenseForm() {
 
 
   }
-  const deleteClick=(id)=>
+  const deleteClick=(event)=>
   {
-fetch( `https://expense-tracker-e3657-default-rtdb.firebaseio.com/expenses.json`,
+fetch( `https://expense-tracker-e3657-default-rtdb.firebaseio.com/expenses/${event.target.id}.json`,
 {
   method:"DELETE",
 }  
@@ -92,7 +96,7 @@ fetch( `https://expense-tracker-e3657-default-rtdb.firebaseio.com/expenses.json`
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         dispatch(expnseSliceActions.setExpenses(data));
       });
   }
@@ -140,6 +144,18 @@ fetch( `https://expense-tracker-e3657-default-rtdb.firebaseio.com/expenses.json`
         <button type="submit" className="signupBtn">
           SUBMIT
         </button>
+        {!premium &&  <button type="submit" className="signupBtn">
+            SUBMIT
+          </button>}
+          {premium && (
+            <button
+              type="submit"
+              className="signupBtn"
+              onClick={premiumHandler}
+            >
+              PREMIUM
+            </button>
+          )}
       </form>
       {/* <button>DOWNLOAD YOUR EXPENSE</button> */}
       <ExpensesJsx />

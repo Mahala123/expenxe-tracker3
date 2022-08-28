@@ -21,6 +21,7 @@ const authslice=createSlice({
 const initialExpState = {
   expenses: {},
   totalExpense: 0,
+  isPremium:false
 };
 
 const expSlice = createSlice({
@@ -32,7 +33,10 @@ const expSlice = createSlice({
     },
     setTotalExpense(state, action){ 
       state.totalExpense = action.payload;
-    }
+    },
+    setPremium(state, action) {
+      state.isPremium = action.payload;
+    },
   },
 });
 
