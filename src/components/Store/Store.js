@@ -1,20 +1,23 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit"
+const initialAuth={
+ idToken: localStorage.getItem("token") || "",
+ logeIn:localStorage.getItem("token") ? true : false,
+}
+
 const authslice=createSlice({
-
-
   name:'auth',
-  initialState: {logeIn:true,idToken:null},
+  initialState: initialAuth,
   reducers:{
-
-      logedIn(state){
-
+      logedIn(state,action){
           state.logeIn=!state.logeIn;
       },
       tokenId(state,action){
           state.idToken=action.payload;
+          localStorage.setItem('token',action.payload)
       },
-      deletetokenId(state){
-           state.idToken=null;   
+      logOut(state){
+           state.idToken=null;  
+           localStorage.removeItem('token') 
       }
   }
 })
