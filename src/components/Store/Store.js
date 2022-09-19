@@ -1,15 +1,17 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit"
 const initialAuth={
  idToken: localStorage.getItem("token") || "",
- logeIn:localStorage.getItem("token") ? true : false,
+ logeIn: true,
+ emailVerified:localStorage.getItem("emailVerified") || false,
 }
-
 const authslice=createSlice({
   name:'auth',
   initialState: initialAuth,
   reducers:{
       logedIn(state,action){
           state.logeIn=!state.logeIn;
+          state.idToken=action.payload;
+          localStorage.setItem('token',action.payload)
       },
       tokenId(state,action){
           state.idToken=action.payload;
@@ -17,7 +19,11 @@ const authslice=createSlice({
       },
       logOut(state){
            state.idToken=null;  
-           localStorage.removeItem('token') 
+           localStorage.clear() 
+      },
+      setEmailverify(state,action){
+        state.emailVerified = action.payload;
+        localStorage.setItem("emailVerified", action.payload);
       }
   }
 })
