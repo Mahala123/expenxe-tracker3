@@ -4,26 +4,30 @@ import{NavLink} from 'react-router-dom'
 // import AuthContext from '../Store/Store'
 import LogOutHandler from './LogOutHandler'
 import ExpenseForm from './ExpenseForm'
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import { expnseSliceActions } from '../Store/Store'
 
 function WelcomePage() {
   // 
+  const dispatch=useDispatch()
   const token=useSelector(state=>state.auth.idToken)
-  // const isPremiums=useSelector(state=>state.exp.isPremium)
+   const isPremiums=useSelector(state=>state.exp.isPremium)
   const expenses=useSelector(state=>state.exp.expenses)
+  const verify=useSelector(state=>state.auth.emailVerified)
  let totalExpense=0
  if (expenses) {
   totalExpense = Object.keys(expenses).reduce((p, key) => {
     return p + Number(expenses[key].cost);
   }, 0);
 }
+const activePremHandler=()=>
+{
+  dispatch(expnseSliceActions.setPremium(true))
+}
 const csvDownload=()=>{
   let csv="cost,           category,         description\n";
-  
   Object.keys(expenses).forEach((item) => {
-
   csv +=`cost:${expenses[item].cost}\tcatagory:${expenses[item].catagory}\tdescription:${expenses[item].description}`
-  
 })
 
 const blob=new Blob([csv],{type:'plain/text'}) 
@@ -38,8 +42,7 @@ a.click()
    fetch("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAIpFpXqTkA-YkLV506rGbmUDu1_nJmw5I",
    {
     method: 'POST',
-        body:JSON.stringify({
-           
+        body:JSON.stringify({  
         idToken:token,
         requestType:'VERIFY_EMAIL',
           }),
@@ -59,14 +62,22 @@ a.click()
   return (
   <div className='comProfile'>
   <h3>WELLCOME TO EXPENXE TRACKER</h3>
+  {isPremiums &&   <div >
+       <label >Toggle Theme</label><br/>
+       <label className='switch'>
+       <input type="checkbox"/>
+       <span class="slider round"></span>
+       </label>
+       </div>   }
   <LogOutHandler/>
   <div className='comProfile'>YOUR profile is incomplete <NavLink to='/CompleteProfile'>complete Now</NavLink></div>
     <button onClick={verifyEmail}>VERIFY YOUR EMAIL</button>
     {totalExpense > 10000 && (
-          <button>
+          <button onClick={activePremHandler}>
             Activate Premium
           </button>
-        )}
+        )}<br/>
+       
     <ExpenseForm/>
     
    <button onClick={csvDownload}>
