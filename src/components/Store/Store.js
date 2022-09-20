@@ -13,10 +13,6 @@ const authslice=createSlice({
           state.idToken=action.payload;
           localStorage.setItem('token',action.payload)
       },
-      tokenId(state,action){
-          state.idToken=action.payload;
-          localStorage.setItem('token',action.payload)
-      },
       logOut(state){
            state.idToken=null;  
            localStorage.clear() 
@@ -49,10 +45,28 @@ const expSlice = createSlice({
   },
 });
 
+const initPremState={
+  premim:false,
+  darkTheme:false
+}
+const isPremium=createSlice({
+  name:"prem",
+  initialState:initPremState,
+  reducers:{
+    setPremium(state, action) {
+      state.premim = action.payload;
+    },
+    setDarkTheam(state, action) {
+        state.darkTheme = action.payload;
+    }
+  }
+})
+
 const store=configureStore({
-    reducer:{auth:authslice.reducer,exp:expSlice.reducer}
+    reducer:{auth:authslice.reducer,exp:expSlice.reducer,prem:isPremium.reducer}
 })
 export const authsliceactions=authslice.actions;
 export const expnseSliceActions=expSlice.actions;
+export const premiumSet=isPremium.actions
 
 export default store;
