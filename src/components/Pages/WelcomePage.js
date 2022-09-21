@@ -1,24 +1,38 @@
-import React  from 'react'
-import'./WelcomePage.css'
+import React, { useRef }  from 'react'
+//import'./WelcomePage.css'
 import{NavLink} from 'react-router-dom'
 // import AuthContext from '../Store/Store'
 import LogOutHandler from './LogOutHandler'
 import ExpenseForm from './ExpenseForm'
 import {useDispatch, useSelector} from "react-redux"
-import { expnseSliceActions } from '../Store/Store'
+import { expnseSliceActions} from '../Store/Store'
+import classes from './WelcomePage.module.css'
 
 function WelcomePage() {
   // 
+  const togle=useRef()
   const dispatch=useDispatch()
+  //const theme=useSelector(state=>state.darkTheme)
+ // console.log(theme)
   const token=useSelector(state=>state.auth.idToken)
    const isPremiums=useSelector(state=>state.exp.isPremium)
+  /// console.log(isPremiums)
   const expenses=useSelector(state=>state.exp.expenses)
-  const verify=useSelector(state=>state.auth.emailVerified)
+ // const verify=useSelector(state=>state.auth.emailVerified)
  let totalExpense=0
  if (expenses) {
   totalExpense = Object.keys(expenses).reduce((p, key) => {
     return p + Number(expenses[key].cost);
   }, 0);
+}
+const toggleTheme=(event)=>{
+  if(event.target.checked){
+    dispatch(expnseSliceActions.setDarkTheam(true))
+   }
+  else{
+    dispatch(expnseSliceActions.setDarkTheam(false))
+  }
+
 }
 const activePremHandler=()=>
 {
@@ -29,14 +43,12 @@ const csvDownload=()=>{
   Object.keys(expenses).forEach((item) => {
   csv +=`cost:${expenses[item].cost}\tcatagory:${expenses[item].catagory}\tdescription:${expenses[item].description}`
 })
-
 const blob=new Blob([csv],{type:'plain/text'}) 
 const a=document.createElement("a")
 a.href=URL.createObjectURL(blob)
 a.download='csv-1.txt'
 document.body.appendChild(a)
 a.click()
-
 }
   const verifyEmail=()=>{
    fetch("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAIpFpXqTkA-YkLV506rGbmUDu1_nJmw5I",
@@ -64,9 +76,13 @@ a.click()
   <h3>WELLCOME TO EXPENXE TRACKER</h3>
   {isPremiums &&   <div >
        <label >Toggle Theme</label><br/>
-       <label className='switch'>
-       <input type="checkbox"/>
-       <span class="slider round"></span>
+       <label className={classes.switch}>
+       <input
+      ref={togle}
+        type="checkbox"
+        onClick={toggleTheme}
+       />
+       <span className={`${classes.slider} ${classes.round}`}></span>
        </label>
        </div>   }
   <LogOutHandler/>
