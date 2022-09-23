@@ -1,7 +1,7 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit"
 const initialAuth={
  idToken: localStorage.getItem("token") || "",
- logeIn: true,
+ logeIn:true,
  emailVerified:localStorage.getItem("emailVerified") || false,
 }
 const authslice=createSlice({
@@ -26,7 +26,8 @@ const authslice=createSlice({
 const initialExpState = {
   expenses: {},
   totalExpense: 0,
-  isPremium:false
+  isPremium:false,
+  darkTheme:false
 };
 
 const expSlice = createSlice({
@@ -42,31 +43,32 @@ const expSlice = createSlice({
     setPremium(state, action) {
       state.isPremium = action.payload;
     },
+    setDarkTheam(state, action) {
+              state.darkTheme = action.payload;
+          }
   },
 });
 
-const initPremState={
-  premim:false,
-  darkTheme:false
-}
-const isPremium=createSlice({
-  name:"prem",
-  initialState:initPremState,
-  reducers:{
-    setPremium(state, action) {
-      state.premim = action.payload;
-    },
-    setDarkTheam(state, action) {
-        state.darkTheme = action.payload;
-    }
-  }
-})
+// const initPremState={
+//   premim:false,
+//   darkTheme:false
+// }
+// const isPremium=createSlice({
+//   name:"prem",
+//   initialState:initPremState,
+//   reducers:{
+//     setPremium(state, action) {
+//       state.premim = action.payload;
+//     },
+//    
+//   }
+// })
 
 const store=configureStore({
-    reducer:{auth:authslice.reducer,exp:expSlice.reducer,prem:isPremium.reducer}
+    reducer:{auth:authslice.reducer,exp:expSlice.reducer}
 })
 export const authsliceactions=authslice.actions;
 export const expnseSliceActions=expSlice.actions;
-export const premiumSet=isPremium.actions
+//export const premiumSet=isPremium.actions;
 
 export default store;

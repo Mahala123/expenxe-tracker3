@@ -13,7 +13,7 @@ function CompleteProfile() {
   const imageurlref=useRef()
   useEffect(()=>{
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAIpFpXqTkA-YkLV506rGbmUDu1_nJmw5I",
+      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBjl4-azPU649DVJbMb6KcZ0OZLMTul42U",
       {
         method: "POST",
         body: JSON.stringify({
@@ -40,7 +40,7 @@ function CompleteProfile() {
     const fullname=inputfullnameref.current.value;
     const imageUrl=imageurlref.current.value;
     
-    fetch("https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAIpFpXqTkA-YkLV506rGbmUDu1_nJmw5I",
+    fetch("https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBjl4-azPU649DVJbMb6KcZ0OZLMTul42U",
     {
       method: "POST",
       body: JSON.stringify({
